@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Event(models.Model):
@@ -21,7 +22,7 @@ class Event(models.Model):
         verbose_name_plural = 'События'
 
     def __str__(self):
-        return '{hall_name}-{date_start}'.format(
+        return '{hall_name} -- {date_start}'.format(
             hall_name=self.hall.name,
-            date_start=self.date_start
+            date_start=timezone.localtime(self.date_start).strftime("%d.%m.%Y, %H:%M")
         )
