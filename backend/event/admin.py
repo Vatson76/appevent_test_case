@@ -7,15 +7,15 @@ from .models import Event
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
 
-    list_display = ('__str__', 'hall', 'get_company', 'is_intersected')
+    list_display = ('__str__', 'hall', 'get_company', 'intersects_with_other_events')
 
     @display(ordering='hall__company__name', description='Компания')
     def get_company(self, obj):
         return obj.hall.company.name
 
-    def is_intersected(self, obj):
-        return obj.error
+    def intersects_with_other_events(self, obj):
+        return obj.intersects_with_other_events
 
-    is_intersected.short_description = 'Пересекается с другими событиями компании'
-    is_intersected.boolean = True
+    intersects_with_other_events.short_description = 'Пересекается с другими событиями компании'
+    intersects_with_other_events.boolean = True
 

@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from decouple import config
 from event.services import import_events
+from company.models import Company
 from hall.models import Hall
 from main.services import authorize_and_build_service
 
@@ -12,10 +13,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['company_id']:
-            halls = Hall.objects.filter(company_id=options['company_id'])
+            companies = Company.objects.filter(pk=options['company_id'])
         else:
-            halls = Hall.objects.all()
-        service = authorize_and_build_service()
+            companies = Company.objects.all()
 
-        for hall in halls:
-            import_events(service, hall)
+        for company in companies:
+            service = authorize_and_build_service(company.id)
+            for hall in company.hall.all():
+                import_events(service, hall)
