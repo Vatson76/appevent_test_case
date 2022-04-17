@@ -35,7 +35,9 @@ class Event(models.Model):
 
         intersecting_events = company_events.filter(
             Q(Q(date_start__lt=self.date_start) & Q(date_end__gt=self.date_start)) |
-            Q(Q(date_start__lt=self.date_end) & Q(date_end__gt=self.date_end))
+            Q(Q(date_start__lt=self.date_end) & Q(date_end__gt=self.date_end)) |
+            Q(Q(date_start__gt=self.date_start) & Q(date_end__lt=self.date_end)) |
+            Q(Q(date_start__lt=self.date_start) & Q(date_end__gt=self.date_end))
         )
         if intersecting_events.exists():
             return True
