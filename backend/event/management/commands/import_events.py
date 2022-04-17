@@ -1,4 +1,5 @@
 import argparse
+import logging
 
 from django.core.management.base import BaseCommand
 from django.utils import timezone
@@ -9,6 +10,8 @@ from main.services import authorize_and_build_service
 
 from datetime import timedelta
 
+logger = logging.getLogger('backend.event.commands.import_events')
+
 
 class Command(BaseCommand):
 
@@ -17,6 +20,11 @@ class Command(BaseCommand):
         parser.add_argument('--timed', action=argparse.BooleanOptionalAction, default=False)
 
     def handle(self, *args, **options):
+        logger.debug('Enter import_events command with args: company_id: {company_id}, timed: {timed}'.format(
+            company_id=options['company_id'],
+            timed=options['timed']
+        ))
+        
         if options['timed']:
             import_time = timezone.now() - timedelta(minutes=2)
         else:
