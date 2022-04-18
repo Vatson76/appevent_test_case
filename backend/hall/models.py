@@ -11,7 +11,12 @@ class Hall(models.Model):
         blank=False,
         related_name='hall'
     )
-    google_calendar_id = models.CharField(max_length=128, verbose_name='id календаря google')
+    google_calendar_id = models.CharField(
+        max_length=128,
+        null=True,
+        blank=True,
+        verbose_name='id календаря google'
+    )
 
     class Meta:
         ordering = 'name',
