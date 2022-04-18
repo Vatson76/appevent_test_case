@@ -6,3 +6,4 @@ __pycache__
 static
 backend/credentials/client_secret.json
 backend/credentials/token.json
+/data
